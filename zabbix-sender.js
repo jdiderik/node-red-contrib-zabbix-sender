@@ -31,11 +31,7 @@ module.exports = function (RED) {
 						try {
 							sender.addItem(...data[i])
 						}catch(err) {
-							if(done){
-								done(err)
-							}else{
-								this.error(err, {originalMessage: msg});
-							}
+							done(err)
 							return;
 						}
 					}
@@ -43,11 +39,7 @@ module.exports = function (RED) {
 					try {
 						sender.addItem(...data)
 					}catch(err) {
-						if(done){
-							done(err)
-						}else{
-							this.error(err, {originalMessage: msg});
-						}
+						done(err)
 						return;
 					}
 				}
@@ -55,13 +47,10 @@ module.exports = function (RED) {
 				var that = this;
 				sender.send(function(err, res) {
 							if (err) {
-								if(done){
-									done(err)
-								}else{
-									that.error(err, {originalMessage: msg});
-								}
+								done(err)
 							}else{
-								if(done) done();
+								that.send({response: res, originalMessage: msg });
+								done();
 							}
 				});
 			}
