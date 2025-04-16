@@ -11,6 +11,15 @@ msg.payload = [
 	0
 ]
 ```
+You can set the timestamp, but remember that you must then also supply the hostname, this is then no longer optional:
+```
+msg.payload = [
+    "webserver",
+    "httpd.running",
+    0,
+    1744775549
+]
+```
 You can set default hostname in node settings, then you can send just item name and value:
 ```
 msg.payload = [

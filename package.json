@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-zabbix-sender",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node-RED node to send data to Zabbix server",
   "main": "zabbix-sender.js",
   "scripts": {
@@ -22,7 +22,7 @@
     }
   },
   "dependencies": {
-    "node-zabbix-sender": "1.1.0"
+    "node-zabbix-sender": "jdiderik/node-zabbix-sender"
   },
   "bugs": {
     "url": "https://github.com/bashlakov/node-red-contrib-zabbix-sender/issues"

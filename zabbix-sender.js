@@ -8,7 +8,7 @@ module.exports = function (RED) {
 		var node = this
 		node.config = config
 
-		this.on('input', function (msg) {
+		this.on('input', function (msg, send, done) {
 			var data = msg.payload
 			var sender = new ZabbixSender({
 				host: node.config.zabbixServer,
@@ -31,7 +31,11 @@ module.exports = function (RED) {
 						try {
 							sender.addItem(...data[i])
 						}catch(err) {
-							this.error(err, {originalMessage: msg});
+							if(done){
+								done(err)
+							}else{
+								this.error(err, {originalMessage: msg});
+							}
 							return;
 						}
 					}
@@ -39,7 +43,11 @@ module.exports = function (RED) {
 					try {
 						sender.addItem(...data)
 					}catch(err) {
-						this.error(err, {originalMessage: msg});
+						if(done){
+							done(err)
+						}else{
+							this.error(err, {originalMessage: msg});
+						}
 						return;
 					}
 				}
@@ -47,8 +55,13 @@ module.exports = function (RED) {
 				var that = this;
 				sender.send(function(err, res) {
 							if (err) {
-								that.error(err, {originalMessage: msg});
-								return;
+								if(done){
+									done(err)
+								}else{
+									that.error(err, {originalMessage: msg});
+								}
+							}else{
+								if(done) done();
 							}
 				});
 			}
